@@ -1,0 +1,15 @@
+plugins {
+    id "org.flywaydb.flyway" version "4.0.3"
+}
+
+apply from: "../../java.gradle"
+
+dependencies {
+    compile "mysql:mysql-connector-java:5.1.40"
+}
+
+flyway {
+    url = "jdbc:mysql://localhost:3306/albums?useSSL=false"
+    user = "root"
+    outOfOrder = false
+}
