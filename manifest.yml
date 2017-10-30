@@ -1,0 +1,27 @@
+---
+applications:
+- name: moviefun-dr
+  path: applications/movie-fun-app/build/libs/movie-fun-app-1.1.0-SNAPSHOT.war
+  env:
+    MOVIES_URL: http://movies-service-dr.apps.cumuluslabs.io/movies
+    ALBUMS_URL: http://albums-service-dr.apps.cumuluslabs.io/albums
+    S3_BUCKETNAME: cf-f1044774-1943-4045-8749-673a2743cfb3
+    S3_SECRETKEY: G9grHmvkBU4gadO4Iq1HQjTLQc/cXS9o+ABA3Q7X
+    S3_ACCESSKEY: AKIAIFTXRSZQPDJGAURA
+    S3_ENDPOINTURL: http://s3.amazonaws.com
+  services:
+    - moviefun-s3
+- name: albums-service-dr
+  path: applications/albums-service/build/libs/albums-service-1.1.0-SNAPSHOT.jar
+  services:
+    - albums-mysql
+    - moviefun-s3
+  env:
+    S3_ENDPOINTURL: http://s3.amazonaws.com
+    S3_ACCESSKEY: AKIAIFTXRSZQPDJGAURA
+    S3_SECRETKEY: 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
+    S3_BUCKETNAME: cf-f1044774-1943-4045-8749-673a2743cfb3
+- name: movies-service-dr
+  path: applications/movie-service/build/libs/movie-service-1.1.0-SNAPSHOT.jar
+  services:
+    - movies-mysql
