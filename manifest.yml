@@ -2,16 +2,25 @@
 memory: 1G
 instances: 1
 applications:
-- name: album-service
+- name: albums-service-dr
   path: applications/album-service/build/libs/album-service-1.1.0-SNAPSHOT.jar
   services:
-  - album-database
-- name: movie-service
+  - albums-mysql
+  env:
+    S3_ACCESSKEY: AKIAIFTXRSZQPDJGAURA
+    S3_BUCKETNAME: cf-f1044774-1943-4045-8749-673a2743cfb3
+    S3_ENDPOINTURL: http://s3.amazonaws.com
+    S3_SECRETKEY: G9grHmvkBU4gadO4Iq1HQjTLQc/cXS9o+ABA3Q7X
+- name: movies-service-dr
   path: applications/movie-service/build/libs/movie-service-1.1.0-SNAPSHOT.jar
   services:
-  - movie-database
-- name: movie-fun-app
+  - movies-mysql
+- name: movie-fun-app-dr
   path: applications/movie-fun-app/build/libs/movie-fun-app-1.1.0-SNAPSHOT.war
   env:
-    ALBUMS_URL: http://album-service.cfapps-02.haas-66.pez.pivotal.io/albums
-    MOVIES_URL: http://movie-service.cfapps-02.haas-66.pez.pivotal.io/movies
+    ALBUMS_URL: http://albums-service.cfapps-02.haas-66.pez.pivotal.io/albums
+    MOVIES_URL: http://movies-service.cfapps-02.haas-66.pez.pivotal.io/movies
+    S3_ACCESSKEY: AKIAIFTXRSZQPDJGAURA
+    S3_BUCKETNAME: cf-f1044774-1943-4045-8749-673a2743cfb3
+    S3_ENDPOINTURL: http://s3.amazonaws.com
+    S3_SECRETKEY: G9grHmvkBU4gadO4Iq1HQjTLQc/cXS9o+ABA3Q7X
