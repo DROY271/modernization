@@ -5,19 +5,40 @@ services:
 - movie-fun-sso
 - movie-fun-registry
 env:
-  TRUST_CERTS: api.cfapps-01.haas-66.pez.pivotal.io,basic-sso.login.run-01.haas-66.pez.pivotal.io
+  TRUST_CERTS: api.system.cumuluslabs.io,basic-sso.login.system.cumuluslabs.io
 applications:
-- name: album-service
+- name: albums-service-dr
   path: applications/album-service/build/libs/album-service-1.1.0-SNAPSHOT.jar
   services:
-  - album-database
+  - albums-mysql
+  routes:
+    - route: albums-service-dr.apps.cumuluslabs.io
   env:
     GRANT_TYPE: client_credentials
-- name: movie-service
+    SSO_IDENTITY_PROVIDERS: uaa
+    S3_ACCESSKEY: AKIAIB22DH5D3ATB2L6Q
+    S3_BUCKETNAME: cf-f1044774-1943-4045-8749-673a2743cfb3
+    S3_ENDPOINTURL: http://s3.amazonaws.com
+    S3_SECRETKEY: Hi2IfQygcOVNXj/evLxM52UH3mhCfGI5jBiIYMk0
+- name: movies-service-dr
   path: applications/movie-service/build/libs/movie-service-1.1.0-SNAPSHOT.jar
   services:
-  - movie-database
+  - movies-mysql
+  routes:
+    - route: movies-service-dr.apps.cumuluslabs.io
   env:
     GRANT_TYPE: client_credentials
-- name: movie-fun-app
+    SSO_IDENTITY_PROVIDERS: uaa
+- name: movie-fun-app-dr
   path: applications/movie-fun-app/build/libs/movie-fun-app-1.1.0-SNAPSHOT.war
+  env:
+    S3_ACCESSKEY: AKIAIB22DH5D3ATB2L6Q
+    S3_BUCKETNAME: cf-f1044774-1943-4045-8749-673a2743cfb3
+    S3_ENDPOINTURL: http://s3.amazonaws.com
+    S3_SECRETKEY: Hi2IfQygcOVNXj/evLxM52UH3mhCfGI5jBiIYMk0
+    GRANT_TYPE: authorization_code
+    SSO_IDENTITY_PROVIDERS: uaa
+  routes:
+    - route: movie-fun-app-dr.apps.cumuluslabs.io
+  services:
+  - movie-fun-config

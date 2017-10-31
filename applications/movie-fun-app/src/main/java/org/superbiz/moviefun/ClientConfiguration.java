@@ -11,11 +11,11 @@ public class ClientConfiguration {
 
     @Bean
     public AlbumsClient albumsClient(RestOperations restOperations) {
-        return new AlbumsClient("//album-service/albums", restOperations);
+        return new AlbumsClient("//albums-service/albums", restOperations);
     }
 
     @Bean
     public MoviesClient moviesClient(RestOperations restOperations) {
-        return new MoviesClient("//movie-service/movies", restOperations);
+        return new MoviesClient("//movies-service/movies", restOperations);
     }
 }
