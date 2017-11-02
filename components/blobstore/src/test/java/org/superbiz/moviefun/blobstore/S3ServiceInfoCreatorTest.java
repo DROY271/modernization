@@ -7,6 +7,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.cloud.cloudfoundry.CloudFoundryConnector;
 import org.springframework.cloud.util.EnvironmentAccessor;
 
+import static org.junit.Assert.*;
+
 import java.lang.reflect.Method;
 
 import static org.mockito.Mock.*;
@@ -71,7 +73,7 @@ public class S3ServiceInfoCreatorTest {
                 "   }\n" +
                 "  ]\n" +
                 "}");
-        System.out.println(testConnector.getServiceInfos());
+        assertTrue(testConnector.getServiceInfos().stream().anyMatch(it -> it instanceof S3ServiceInfo));
     }
 
 

@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Profile;
 
 import java.util.Collection;
 
-@Configuration()
+@Configuration
 public class S3BlobStoreConfiguration {
 
     @Configuration
